@@ -14,6 +14,11 @@ class List extends Component {
     render() {
         const { listData } = this.props;
 
+        if (!listData.length) {
+            return <h1>Loading...</h1>
+            // used for loading screens
+        }
+
         const listItems = listData.map((item, index) => {
             return (<li className="collection-item" key={item._id}>
                 <Link to={`/item/${item._id}`}>{item.title}</Link>

@@ -6,14 +6,22 @@ import { addToDoItem } from "../actions";
 
 class AddItem extends Component {
     async handleAddItem(values) {
-        console.log("Form Values:", values);
 
-        await this.props.addToDoItem(values);
 
-        this.props.history.push("/");
+        try {
+            console.log("Form Values:", values);
 
-        console.log("Add Item Props:", this.props);
-    }
+            await this.props.addToDoItem(values);
+
+            this.props.history.push("/");
+
+            console.log("Add Item Props:", this.props);
+
+        } catch(err){
+            console.warn(err.message);
+        }
+
+    }z
 
     renderInput({label, input, meta: {touched, error}}) {
         return (
