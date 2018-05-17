@@ -21,7 +21,7 @@ class AddItem extends Component {
             console.warn(err.message);
         }
 
-    }z
+    }
 
     renderInput({label, input, meta: {touched, error}}) {
         return (

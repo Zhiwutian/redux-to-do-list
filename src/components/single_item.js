@@ -1,19 +1,87 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {getSingleItem} from "../actions";
+import {getSingleItem, deleteItem, toggleComplete} from "../actions";
+
 import {Link } from "react-router-dom";
 
 class SingleItem extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+
+            timeCreated: "",
+            timeCompleted: ""
+
+        }
+
+
+
+    }
 
     componentDidMount(){
         console.log("Single Props:", this.props);
-
         this.props.getSingleItem(this.props.match.params.id);
+
+
+    }
+
+    async handleDeleteItem() {
+
+        await this.props.deleteItem(this.props.match.params.id);
+        this.props.history.push("/");
+
+    }
+
+    async handleToggleItem() {
+
+        await this.props.toggleComplete(this.props.match.params.id);
+
+
+    }
+
+    formattedTime(ts) {
+
+
+        var a = new Date(ts * 1000);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var timeCompleted = date + ' ' + month +  ' ' + hour + ':' + min + ':' + sec ;
+        console.log(timeCompleted);
+
+
+        return <span>{timeCompleted}</span>
+
     }
 
     render() {
+        console.log(this.state);
         console.log("Single Props:", this.props);
-        const {title, details} = this.props.item;
+        const {title, details, complete, completed, created} = this.props.item;
+
+
+        if(complete === true && completed === true) {
+            return (
+                <div>
+                    <h1 className="center">To Do Item</h1>
+                    <div className="row center">
+                        <Link to="/" className="btn blue-grey">View Full List</Link>
+                    </div>
+                    <h4 className="center">{title}</h4>
+                    <p className="center">{details}</p>
+                    <p className="center">{this.formattedTime(created)}</p>
+                    <p className="center">{this.formattedTime(completed)}</p>
+                    <p className="center">Item has been completed!</p>
+
+                    <button onClick={this.handleDeleteItem.bind(this)}>Delete</button>
+                    <button onClick={this.handleToggleItem.bind(this)}>Complete</button>
+                </div>
+            )
+        }
 
         return (
             <div>
@@ -23,6 +91,10 @@ class SingleItem extends Component {
                 </div>
                 <h4 className="center">{title}</h4>
                 <p className="center">{details}</p>
+                <p className="center">{this.formattedTime(created)}</p>
+                <p className="center">{this.formattedTime(completed)}</p>
+                <button onClick={this.handleDeleteItem.bind(this)}>Delete</button>
+                <button onClick={this.handleToggleItem.bind(this)}>Complete</button>
             </div>
         )
     }
@@ -43,4 +115,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect( mapStateToProps, { getSingleItem})(SingleItem);
+export default connect( mapStateToProps, { getSingleItem, deleteItem, toggleComplete })(SingleItem);
