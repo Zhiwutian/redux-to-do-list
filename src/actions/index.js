@@ -57,6 +57,14 @@ export function deleteItem(id) {
 
 }
 
+export function clearSingleItem() {
+    
+    return {
+        type: types.CLEAR_SINGLE_ITEM
+    }
+    
+}
+
 // To toggle complete of an item:
 // axios.put(`${BASE_URL}/todos/${id + API_KEY}`);
 
