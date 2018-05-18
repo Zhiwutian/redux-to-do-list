@@ -64,7 +64,7 @@ class SingleItem extends Component {
         const {title, details, complete, completed, created} = this.props.item;
 
 
-        if(complete === true && completed === true) {
+
             return (
                 <div>
                     <h1 className="center">To Do Item</h1>
@@ -75,28 +75,28 @@ class SingleItem extends Component {
                     <p className="center">{details}</p>
                     <p className="center">{this.formattedTime(created)}</p>
                     <p className="center">{this.formattedTime(completed)}</p>
-                    <p className="center">Item has been completed!</p>
-
-                    <button onClick={this.handleDeleteItem.bind(this)}>Delete</button>
-                    <button onClick={this.handleToggleItem.bind(this)}>Complete</button>
+                    <p className="center">Item is {complete ? "completed" : "incomplete"}!</p>
+                    <div className="center">
+                        <button  className="center  btn blue-grey" onClick={this.handleDeleteItem.bind(this)}>Delete</button>
+                        <button className={`btn ${complete ? "blue" : "green"}`} onClick={this.handleToggleItem.bind(this)}>{complete ? "Toggle incomplete" : "Toggle complete"}</button>
+                    </div>
                 </div>
             )
-        }
 
-        return (
-            <div>
-                <h1 className="center">To Do Item</h1>
-                <div className="row center">
-                    <Link to="/" className="btn blue-grey">View Full List</Link>
-                </div>
-                <h4 className="center">{title}</h4>
-                <p className="center">{details}</p>
-                <p className="center">{this.formattedTime(created)}</p>
-                <p className="center">{this.formattedTime(completed)}</p>
-                <button onClick={this.handleDeleteItem.bind(this)}>Delete</button>
-                <button onClick={this.handleToggleItem.bind(this)}>Complete</button>
-            </div>
-        )
+
+        // return (
+        //     <div>
+        //         <h1 className="center">To Do Item</h1>
+        //         <div className="row center">
+        //             <Link to="/" className="btn blue-grey">View Full List</Link>
+        //         </div>
+        //         <h4 className="center">{title}</h4>
+        //         <p className="center">{details}</p>
+        //         <p className="center">{this.formattedTime(created)}</p>
+        //         <button onClick={this.handleDeleteItem.bind(this)}>Delete</button>
+        //         <button onClick={this.handleToggleItem.bind(this)}>Complete</button>
+        //     </div>
+        // )
     }
 }
 
